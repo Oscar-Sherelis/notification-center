@@ -20,25 +20,17 @@ services:
     depends_on:
       - php
   database:
-    image: postgres:18.2
+    image: mysql:8.0
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-app}
-      # You should definitely change the password in production
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
-    healthcheck:
-      test: ["CMD", "pg_isready", "-d", "${POSTGRES_DB:-app}", "-U", "${POSTGRES_USER:-postgres}"]
-      timeout: 5s
-      retries: 5
-      start_period: 60s
+      MYSQL_DATABASE: notification
+      MYSQL_ROOT_PASSWORD: root
     container_name: notification_db
     ports:
-      - "5432:5432"
+    - "3306:3306"
     volumes:
-      - postgres_data:/var/lib/postgresql
+    - database_data:/var/lib/mysql
       # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
       # - ./docker/db/data:/var/lib/postgresql/data:rw
 ###< doctrine/doctrine-bundle ###
-
 volumes:
-  postgres_data:
+  database_data:
