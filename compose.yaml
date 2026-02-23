@@ -29,6 +29,8 @@ services:
     - "3306:3306"
     volumes:
     - database_data:/var/lib/mysql
+    - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+    - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql
       # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
       # - ./docker/db/data:/var/lib/postgresql/data:rw
 ###< doctrine/doctrine-bundle ###

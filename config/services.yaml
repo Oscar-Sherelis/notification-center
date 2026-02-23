@@ -19,5 +19,16 @@ services:
     App\:
         resource: '../src/'
 
+    App\Notification\:
+        resource: '../src/Notification/'
+        tags: ['app.notification_rule']
+
+    App\Service\NotificationService:
+        arguments:
+            $rules: !tagged_iterator app.notification_rule
+            
+    App\Notification\NotificationResolver:
+        arguments:
+            $rules: !tagged_iterator app.notification_rule
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
